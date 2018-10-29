@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Latte\Runtime;
 
 use Latte;
-use Latte\Engine;
+use Latte\IEngine;
 
 
 /**
@@ -29,7 +29,7 @@ class Template implements ITemplate
 	public $global;
 
 	/** @var string  @internal */
-	protected $contentType = Engine::CONTENT_HTML;
+	protected $contentType = IEngine::CONTENT_HTML;
 
 	/** @var array  @internal */
 	protected $params = [];
@@ -49,7 +49,7 @@ class Template implements ITemplate
 	/** @var [name => type]  @internal */
 	protected $blockTypes = [];
 
-	/** @var Engine */
+	/** @var IEngine */
 	private $engine;
 
 	/** @var string */
@@ -62,7 +62,7 @@ class Template implements ITemplate
 	private $referenceType;
 
 
-	public function __construct(Engine $engine, array $params, FilterExecutor $filters, array $providers, string $name)
+	public function __construct(IEngine $engine, array $params, FilterExecutor $filters, array $providers, string $name)
 	{
 		$this->engine = $engine;
 		$this->params = $params;
@@ -75,7 +75,7 @@ class Template implements ITemplate
 	}
 
 
-	public function getEngine(): Engine
+	public function getEngine(): IEngine
 	{
 		return $this->engine;
 	}

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Latte\Runtime;
 
-use Latte\Engine;
+use Latte\IEngine;
 use Latte\Helpers;
 
 

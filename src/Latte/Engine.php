@@ -13,21 +13,11 @@ namespace Latte;
 /**
  * Templating engine Latte.
  */
-class Engine
+class Engine implements IEngine
 {
 	use Strict;
 
 	public const VERSION = '3.0.0-dev';
-
-	/** Content types */
-	public const
-		CONTENT_HTML = 'html',
-		CONTENT_XHTML = 'xhtml',
-		CONTENT_XML = 'xml',
-		CONTENT_JS = 'js',
-		CONTENT_CSS = 'css',
-		CONTENT_ICAL = 'ical',
-		CONTENT_TEXT = 'text';
 
 	/** @var callable[] */
 	public $onCompile = [];
@@ -48,7 +38,7 @@ class Engine
 	private $providers = [];
 
 	/** @var string */
-	private $contentType = self::CONTENT_HTML;
+	private $contentType = IEngine::CONTENT_HTML;
 
 	/** @var string */
 	private $tempDirectory;

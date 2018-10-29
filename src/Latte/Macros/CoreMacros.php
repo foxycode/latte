@@ -11,7 +11,7 @@ namespace Latte\Macros;
 
 use Latte;
 use Latte\CompileException;
-use Latte\Engine;
+use Latte\IEngine;
 use Latte\Helpers;
 use Latte\MacroNode;
 use Latte\PhpWriter;

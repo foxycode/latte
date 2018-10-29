@@ -9,6 +9,7 @@ spl_autoload_register(function ($className) {
 		Latte\Engine::class => 'Engine.php',
 		Latte\Helpers::class => 'Helpers.php',
 		Latte\HtmlNode::class => 'Compiler/HtmlNode.php',
+		Latte\IEngine::class => 'IEngine.php',
 		Latte\ILoader::class => 'ILoader.php',
 		Latte\IMacro::class => 'IMacro.php',
 		Latte\Loaders\FileLoader::class => 'Loaders/FileLoader.php',

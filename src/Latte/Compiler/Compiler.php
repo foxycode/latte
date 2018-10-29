@@ -21,13 +21,13 @@ class Compiler
 
 	/** Context-aware escaping content types */
 	public const
-		CONTENT_HTML = Engine::CONTENT_HTML,
-		CONTENT_XHTML = Engine::CONTENT_XHTML,
-		CONTENT_XML = Engine::CONTENT_XML,
-		CONTENT_JS = Engine::CONTENT_JS,
-		CONTENT_CSS = Engine::CONTENT_CSS,
-		CONTENT_ICAL = Engine::CONTENT_ICAL,
-		CONTENT_TEXT = Engine::CONTENT_TEXT;
+		CONTENT_HTML = IEngine::CONTENT_HTML,
+		CONTENT_XHTML = IEngine::CONTENT_XHTML,
+		CONTENT_XML = IEngine::CONTENT_XML,
+		CONTENT_JS = IEngine::CONTENT_JS,
+		CONTENT_CSS = IEngine::CONTENT_CSS,
+		CONTENT_ICAL = IEngine::CONTENT_ICAL,
+		CONTENT_TEXT = IEngine::CONTENT_TEXT;
 
 	/** @internal Context-aware escaping HTML contexts */
 	public const

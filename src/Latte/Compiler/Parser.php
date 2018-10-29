@@ -25,10 +25,10 @@ class Parser
 
 	/** Context-aware escaping content types */
 	public const
-		CONTENT_HTML = Engine::CONTENT_HTML,
-		CONTENT_XHTML = Engine::CONTENT_XHTML,
-		CONTENT_XML = Engine::CONTENT_XML,
-		CONTENT_TEXT = Engine::CONTENT_TEXT;
+		CONTENT_HTML = IEngine::CONTENT_HTML,
+		CONTENT_XHTML = IEngine::CONTENT_XHTML,
+		CONTENT_XML = IEngine::CONTENT_XML,
+		CONTENT_TEXT = IEngine::CONTENT_TEXT;
 
 	/** @internal states */
 	public const

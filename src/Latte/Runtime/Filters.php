@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Latte\Runtime;
 
 use Latte;
-use Latte\Engine;
+use Latte\IEngine;
 
 
 /**
@@ -202,7 +202,7 @@ class Filters
 		if (!in_array($info->contentType, [null, 'html', 'xhtml', 'htmlAttr', 'xhtmlAttr', 'xml', 'xmlAttr'], true)) {
 			trigger_error('Filter |stripHtml used with incompatible type ' . strtoupper($info->contentType), E_USER_WARNING);
 		}
-		$info->contentType = Engine::CONTENT_TEXT;
+		$info->contentType = IEngine::CONTENT_TEXT;
 		return html_entity_decode(strip_tags((string) $s), ENT_QUOTES, 'UTF-8');
 	}
 
@@ -226,7 +226,7 @@ class Filters
 	 */
 	public static function convertTo(FilterInfo $info, string $dest, $s): string
 	{
-		$source = $info->contentType ?: Engine::CONTENT_TEXT;
+		$source = $info->contentType ?: IEngine::CONTENT_TEXT;
 		if ($source === $dest) {
 			return $s;
 		} elseif ($conv = self::getConvertor($source, $dest)) {
@@ -242,7 +242,7 @@ class Filters
 	public static function getConvertor(string $source, string $dest): ?callable
 	{
 		static $table = [
-			Engine::CONTENT_TEXT => [
+			IEngine::CONTENT_TEXT => [
 				'html' => 'escapeHtmlText', 'xhtml' => 'escapeHtmlText',
 				'htmlAttr' => 'escapeHtmlAttr', 'xhtmlAttr' => 'escapeHtmlAttr',
 				'htmlAttrJs' => 'escapeHtmlAttr', 'xhtmlAttrJs' => 'escapeHtmlAttr',
@@ -251,28 +251,28 @@ class Filters
 				'htmlComment' => 'escapeHtmlComment', 'xhtmlComment' => 'escapeHtmlComment',
 				'xml' => 'escapeXml', 'xmlAttr' => 'escapeXml',
 			],
-			Engine::CONTENT_JS => [
+			IEngine::CONTENT_JS => [
 				'html' => 'escapeHtmlText', 'xhtml' => 'escapeHtmlText',
 				'htmlAttr' => 'escapeHtmlAttr', 'xhtmlAttr' => 'escapeHtmlAttr',
 				'htmlAttrJs' => 'escapeHtmlAttr', 'xhtmlAttrJs' => 'escapeHtmlAttr',
 				'htmlJs' => 'escapeHtmlRawText', 'xhtmlJs' => 'escapeHtmlRawText',
 				'htmlComment' => 'escapeHtmlComment', 'xhtmlComment' => 'escapeHtmlComment',
 			],
-			Engine::CONTENT_CSS => [
+			IEngine::CONTENT_CSS => [
 				'html' => 'escapeHtmlText', 'xhtml' => 'escapeHtmlText',
 				'htmlAttr' => 'escapeHtmlAttr', 'xhtmlAttr' => 'escapeHtmlAttr',
 				'htmlAttrCss' => 'escapeHtmlAttr', 'xhtmlAttrCss' => 'escapeHtmlAttr',
 				'htmlCss' => 'escapeHtmlRawText', 'xhtmlCss' => 'escapeHtmlRawText',
 				'htmlComment' => 'escapeHtmlComment', 'xhtmlComment' => 'escapeHtmlComment',
 			],
-			Engine::CONTENT_HTML => [
+			IEngine::CONTENT_HTML => [
 				'htmlAttr' => 'escapeHtmlAttrConv',
 				'htmlAttrJs' => 'escapeHtmlAttrConv',
 				'htmlAttrCss' => 'escapeHtmlAttrConv',
 				'htmlAttrUrl' => 'escapeHtmlAttrConv',
 				'htmlComment' => 'escapeHtmlComment',
 			],
-			Engine::CONTENT_XHTML => [
+			IEngine::CONTENT_XHTML => [
 				'xhtmlAttr' => 'escapeHtmlAttrConv',
 				'xhtmlAttrJs' => 'escapeHtmlAttrConv',
 				'xhtmlAttrCss' => 'escapeHtmlAttrConv',
@@ -303,7 +303,7 @@ class Filters
 	 */
 	public static function strip(FilterInfo $info, string $s): string
 	{
-		return in_array($info->contentType, [Engine::CONTENT_HTML, Engine::CONTENT_XHTML], true)
+		return in_array($info->contentType, [IEngine::CONTENT_HTML, IEngine::CONTENT_XHTML], true)
 			? trim(self::spacelessHtml($s))
 			: trim(self::spacelessText($s));
 	}
@@ -356,7 +356,7 @@ class Filters
 	{
 		if ($level < 1) {
 			// do nothing
-		} elseif (in_array($info->contentType, [Engine::CONTENT_HTML, Engine::CONTENT_XHTML], true)) {
+		} elseif (in_array($info->contentType, [IEngine::CONTENT_HTML, IEngine::CONTENT_XHTML], true)) {
 			$s = preg_replace_callback('#<(textarea|pre).*?</\\1#si', function ($m) {
 				return strtr($m[0], " \t\r\n", "\x1F\x1E\x1D\x1A");
 			}, $s);
