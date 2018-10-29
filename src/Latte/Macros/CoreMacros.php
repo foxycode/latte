@@ -15,6 +15,7 @@ use Latte\Engine;
 use Latte\Helpers;
 use Latte\MacroNode;
 use Latte\PhpWriter;
+use Latte\Runtime\Template;
 
 
 /**
@@ -263,7 +264,7 @@ class CoreMacros extends MacroSet
 	 */
 	public function macroCaptureEnd(MacroNode $node, PhpWriter $writer)
 	{
-		$body = in_array($node->context[0], [Engine::CONTENT_HTML, Engine::CONTENT_XHTML], true)
+		$body = in_array($node->context[0], [IEngine::CONTENT_HTML, IEngine::CONTENT_XHTML], true)
 			? 'ob_get_length() ? new LR\\Html(ob_get_clean()) : ob_get_clean()'
 			: 'ob_get_clean()';
 		return $writer->write("\$_fi = new LR\\FilterInfo(%var); %raw = %modifyContent($body);", $node->context[0], $node->data->variable);
@@ -278,7 +279,7 @@ class CoreMacros extends MacroSet
 		if ($node->modifiers || $node->args) {
 			throw new CompileException('Modifiers and arguments are not allowed in ' . $node->getNotation());
 		}
-		$node->openingCode = in_array($node->context[0], [Engine::CONTENT_HTML, Engine::CONTENT_XHTML], true)
+		$node->openingCode = in_array($node->context[0], [IEngine::CONTENT_HTML, IEngine::CONTENT_XHTML], true)
 			? '<?php ob_start(function ($s, $phase) { static $strip = true; return LR\Filters::spacelessHtml($s, $phase, $strip); }, 4096); ?>'
 			: "<?php ob_start('Latte\\Runtime\\Filters::spacelessText', 4096); ?>";
 		$node->closingCode = '<?php ob_end_flush(); ?>';

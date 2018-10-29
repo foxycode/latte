@@ -103,10 +103,10 @@ class FilterExecutor
 					array_unshift($args, $info = new FilterInfo);
 					if ($args[1] instanceof IHtmlString) {
 						$args[1] = $args[1]->__toString();
-						$info->contentType = Engine::CONTENT_HTML;
+						$info->contentType = IEngine::CONTENT_HTML;
 					}
 					$res = $callback(...$args);
-					return $info->contentType === Engine::CONTENT_HTML
+					return $info->contentType === IEngine::CONTENT_HTML
 						? new Html($res)
 						: $res;
 				};
@@ -150,14 +150,14 @@ class FilterExecutor
 			return $callback(...$args);
 
 		} else { // classic filter
-			if ($info->contentType !== Engine::CONTENT_TEXT) {
+			if ($info->contentType !== IEngine::CONTENT_TEXT) {
 				trigger_error("Filter |$name is called with incompatible content type " . strtoupper($info->contentType)
-					. ($info->contentType === Engine::CONTENT_HTML ? ', try to prepend |stripHtml.' : '.'), E_USER_WARNING);
+					. ($info->contentType === IEngine::CONTENT_HTML ? ', try to prepend |stripHtml.' : '.'), E_USER_WARNING);
 			}
 			$res = ($this->$name)(...$args);
 			if ($res instanceof IHtmlString) {
 				trigger_error("Filter |$name should be changed to content-aware filter.");
-				$info->contentType = Engine::CONTENT_HTML;
+				$info->contentType = IEngine::CONTENT_HTML;
 				$res = $res->__toString();
 			}
 			return $res;
